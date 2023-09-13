@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container text-center">
+    <div class="row align-items-center">
+        <div class="col">
+            <h1 class="text-center">Inscrivez-vous</h1>
+            <button type="button" class="btn btn-primary">S'inscrire</button>
+        </div>
+        <div class="col">
+            <h1 class="text-center">Connectez-vous</h1>
+            <p class="text-center">{{ message }}</p>
+            <form method="post">
+                {{ form.as_p }}
+                {% csrf_token %}
+                <button type="submit" class="btn btn-primary">Se connecter</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

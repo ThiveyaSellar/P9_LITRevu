@@ -56,7 +56,9 @@ ROOT_URLCONF = 'litrevu.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [
+            BASE_DIR.joinpath('templates'),
+        ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -123,3 +125,10 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Par défaut Django utilise le modèle User par défaut pour l'authentification
+# Permet d'indiquer à Django d'utiliser le modèle personnalisé User
+AUTH_USER_MODEL = "authentication.User"
+
+# Indiquer à Django la page de redirection si l'utilisateur n'est pas connecté
+LOGIN_URL = 'login'
