@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1 class="text-center">Créer une critique</h1>
+<form method="post">
+    {% csrf_token %}
+    {{ ticket_form.as_p }}
+    {{ review_form.as_p }}
+    <input type="submit" value="Envoyer">
+</form>
+
+{% endblock %}

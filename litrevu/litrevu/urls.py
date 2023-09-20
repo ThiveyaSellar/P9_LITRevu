@@ -27,5 +27,6 @@ urlpatterns = [
     path('home/', blog.views.home, name='home'),
     path('signup/', authentication.views.signup_page, name='signup'),
 
-    path('tickets/add/', blog.views.create_ticket, name='create-ticket'),
+    path('tickets/add-ticket/', blog.views.create_ticket, name='create-ticket'),
+    path('tickets/add-review/', blog.views.create_review, name='create-review'),
 ]
