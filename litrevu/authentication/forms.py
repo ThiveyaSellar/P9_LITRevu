@@ -17,3 +17,4 @@ class SignupForm(UserCreationForm):
     class Meta(UserCreationForm.Meta):
         # Obtenir le modèle User sans l'importer avec get_user_model
         model = get_user_model()
+

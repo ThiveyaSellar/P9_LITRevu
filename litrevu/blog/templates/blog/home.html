@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load blog_extras %}
 
 {% block content %}
 
@@ -11,5 +12,22 @@
             <a class="btn btn-primary" href="{% url 'create-review' %}" role="button">Créer une critique</a>
         </div>
     </div>
+    {% for instance in tickets_and_reviews %}
+        {% if instance|model_type == 'Ticket' %}
+        <!-- Si un ticket a eu une critique ne pas mettre le bouton "créer une critique-->
+            <div class="card w-75 mb-3">
+              <div class="card-body">
+                <h5 class="card-title">{{ instance.title }}</h5>
+                <p class="card-text">{{ instance.description }}</p>
+                <p class="card-text">{{ instance.user.username }}</p>
+                <img src="{{ instance.image }}">
+                <a href="{% url 'create-review-to-ticket' instance.id %}" class="btn btn-primary">Créer une critique</a>
+              </div>
+            </div>
+        {% elif instance|model_type == 'Review' %}
+
+        {% endif %}
+
+    {% endfor %}
 </div>
 {% endblock content %}

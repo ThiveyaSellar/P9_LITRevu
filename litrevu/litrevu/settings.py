@@ -132,3 +132,6 @@ AUTH_USER_MODEL = "authentication.User"
 
 # Indiquer à Django la page de redirection si l'utilisateur n'est pas connecté
 LOGIN_URL = 'login'
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR.joinpath('media/')

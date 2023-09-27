@@ -2,10 +2,5 @@
 
 {% block content %}
 <h1 class="text-center">Créer un ticket</h1>
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <input type="submit" value="Envoyer">
-</form>
-
+{% include 'blog/partials/ticket.html' with ticket=ticket %}
 {% endblock content %}

@@ -17,6 +17,8 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
+from django.conf import settings
+from django.conf.urls.static import static
 import authentication.views
 import blog.views
 
@@ -27,6 +29,50 @@ urlpatterns = [
     path('home/', blog.views.home, name='home'),
     path('signup/', authentication.views.signup_page, name='signup'),
 
-    path('tickets/add-ticket/', blog.views.create_ticket, name='create-ticket'),
-    path('tickets/add-review/', blog.views.create_review, name='create-review'),
+    path(
+        'tickets/add-ticket/',
+        blog.views.create_ticket,
+        name='create-ticket'
+    ),
+    path(
+        'tickets/add-review/',
+        blog.views.create_review,
+        name='create-review'
+    ),
+    path(
+        'tickets/add-review-to-ticket/<int:id>/',
+        blog.views.create_review_to_ticket,
+        name='create-review-to-ticket'
+    ),
+    path(
+        'tickets/edit-ticket/<int:id>',
+        blog.views.edit_ticket,
+        name='edit-ticket'
+    ),
+    path(
+        'tickets/edit_review/<int:id>',
+        blog.views.edit_review,
+        name='edit-review'
+    ),
+    path(
+        'tickets/delete_ticket/<int:id>',
+        blog.views.delete_ticket,
+        name='delete-ticket'
+    ),
+    path(
+        'tickets/delete_review/<int:id>',
+        blog.views.delete_review,
+        name='delete-review'
+    ),
+    path(
+        'followers/',
+        blog.views.followers_list,
+        name='followers-list'
+    ),
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(
+        settings.MEDIA_URL,
+        document_root=settings.MEDIA_ROOT
+    )

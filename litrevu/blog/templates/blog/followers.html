@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1 class="text-center">Suivre un utilisateur</h1>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Envoyer">
+</form>
+
+<h1>Abonnements</h1>
+<ul class="list-group">
+{% for user in following %}
+    <li class="list-group-item">{{ user.username }}</li>
+{% endfor %}
+</ul>
+
+<h1>Abonnées</h1>
+<ul class="list-group">
+{% for user in followed_by %}
+    <li class="list-group-item">{{ user.username }}</li>
+{% endfor %}
+</ul>
+
+{% endblock %}

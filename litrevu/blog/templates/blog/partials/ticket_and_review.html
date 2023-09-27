@@ -1,0 +1,18 @@
+<div class="card">
+  <div class="card-header">
+    Vous êtes en train de poster en réponse à
+  </div>
+  <div class="card-body">
+    <p class="card-text">{{ ticket.user.username }} a demandé une critique :</p>
+    <h5 class="card-title">{{ ticket.title }}</h5>
+    <p class="card-text">{{ ticket.description }}</p>
+    <p class="card-text">{{ ticket.image }}</p>
+
+
+    <form method="post">
+      {% csrf_token %}
+      {{ review_form.as_p }}
+      <input type="submit" value="Envoyer">
+    </form>
+  </div>
+</div>
