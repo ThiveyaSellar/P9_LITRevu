@@ -4,8 +4,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 
 from blog.forms import TicketForm, ReviewForm, FollowerForm
-from blog.models import Ticket, Review
-from authentication.models import UserFollows
+from blog.models import Ticket, Review, UserFollows
 
 @login_required
 def home(request):
@@ -168,17 +167,25 @@ def followers_list(request):
     return render(request, 'blog/followers.html', context=context)
 """
 
+""""""
 @login_required
 def followers_list(request):
-    # Abonnements :
-    # Les lignes où dans la colonne user on a le user courant
-    following = UserFollows.objects.get(user=request.user.id)
-    # Abonnés :
-    # Les lignes où l'utilisateur courant est dans la colonne followed_user
-    followed_by = UserFollows.objects.all(followed_user=request.user.id)
+    # Les utilisateurs que je suis sont mes abonnements
+    # Je suis user, ils sont followed_user
+    abonnements = UserFollows.objects.filter(user=request.user.id)
+    print("-----------------------------------------------------")
+    for user in abonnements:
+        print(user.followed_user)
+    print("-----------------------------------------------------")
+
+    # Les utilisateurs qui me suivent sont les abonnes
+    # Je suis suivi je suis followed_user et ils sont user
+    abonnes = UserFollows.objects.filter(followed_user=request.user.id)
+    for user in abonnes:
+        print(user.user)
 
     #Lister les abonnements puis les abonnées
-    if request.method == 'POST':
+    '''if request.method == 'POST':
         form = FollowerForm(request.POST)
         if form.is_valid():
             follow = form.save(commit=False)
@@ -187,12 +194,12 @@ def followers_list(request):
             # Rester sur la même page
             return redirect('followers-list')
     else:
-        form = FollowerForm()
+        form = FollowerForm()'''
 
     context = {
-        'following': following,
-        'followed_by': followed_by,
-        'form': form
+        'abonnements': abonnements,
+        'abonnes': abonnes,
+        #'form': form
     }
 
     return render(request, 'blog/followers.html', context=context)

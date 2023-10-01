@@ -1,6 +1,5 @@
 from django import forms
-from blog.models import Ticket, Review
-from authentication.models import UserFollows
+from blog.models import Ticket, Review, UserFollows
 
 class TicketForm(forms.ModelForm):
     ticket_blog = forms.BooleanField(widget=forms.HiddenInput, initial=True)

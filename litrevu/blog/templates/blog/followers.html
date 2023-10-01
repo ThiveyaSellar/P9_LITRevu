@@ -11,15 +11,15 @@
 
 <h1>Abonnements</h1>
 <ul class="list-group">
-{% for user in following %}
-    <li class="list-group-item">{{ user.username }}</li>
+{% for user in abonnements %}
+    <li class="list-group-item">{{ user.followed_user }}</li>
 {% endfor %}
 </ul>
 
 <h1>Abonnées</h1>
 <ul class="list-group">
-{% for user in followed_by %}
-    <li class="list-group-item">{{ user.username }}</li>
+{% for user in abonnes %}
+    <li class="list-group-item">{{ user.user }}</li>
 {% endfor %}
 </ul>
 

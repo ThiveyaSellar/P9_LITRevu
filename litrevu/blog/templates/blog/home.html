@@ -20,7 +20,7 @@
                 <h5 class="card-title">{{ instance.title }}</h5>
                 <p class="card-text">{{ instance.description }}</p>
                 <p class="card-text">{{ instance.user.username }}</p>
-                <img src="{{ instance.image }}">
+                <img src="http://127.0.0.1:8000/media/{{ instance.image }}">
                 <a href="{% url 'create-review-to-ticket' instance.id %}" class="btn btn-primary">Créer une critique</a>
               </div>
             </div>
