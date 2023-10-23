@@ -1,0 +1,23 @@
+{% load blog_extras %}
+
+{% if ticket %}
+    <div class="row mt-3">
+        <div class="col">
+          <a href="{% url 'edit-ticket' ticket.id %}" class="btn btn-primary">Modifier</a>
+        </div>
+        <div class="col">
+          <a href="{% url 'delete-ticket' ticket.id %}" class="btn btn-primary">Supprimer</a>
+        </div>
+    </div>
+{% elif review %}
+    <div class="row mt-3">
+        <div class="col">
+          <a href="{% url 'edit-review' review.id %}" class="btn btn-primary">Modifier</a>
+        </div>
+        <div class="col">
+          <a href="{% url 'delete-review' review.id %}" class="btn btn-primary">Supprimer</a>
+        </div>
+    </div>
+{% else %}
+    <h1>Test</h1>
+{% endif %}

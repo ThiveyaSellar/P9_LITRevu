@@ -4,7 +4,7 @@
 {% block content %}
 
 <div class="container text-center">
-    <div class="row align-items-center">
+    <div class="row align-items-center mb-3 mt-3">
         <div class="col">
             <a class="btn btn-primary" href="{% url 'create-ticket' %}" role="button">Demander une critique</a>
         </div>
@@ -14,20 +14,11 @@
     </div>
     {% for instance in tickets_and_reviews %}
         {% if instance|model_type == 'Ticket' %}
-        <!-- Si un ticket a eu une critique ne pas mettre le bouton "créer une critique-->
-            <div class="card w-75 mb-3">
-              <div class="card-body">
-                <h5 class="card-title">{{ instance.title }}</h5>
-                <p class="card-text">{{ instance.description }}</p>
-                <p class="card-text">{{ instance.user.username }}</p>
-                <img src="http://127.0.0.1:8000/media/{{ instance.image }}">
-                <a href="{% url 'create-review-to-ticket' instance.id %}" class="btn btn-primary">Créer une critique</a>
-              </div>
-            </div>
+            {% include 'blog/partials/feed_ticket.html' with ticket=instance  %}
         {% elif instance|model_type == 'Review' %}
-
+            {% include 'blog/partials/feed_review.html' with review=instance %}
         {% endif %}
-
     {% endfor %}
+
 </div>
 {% endblock content %}

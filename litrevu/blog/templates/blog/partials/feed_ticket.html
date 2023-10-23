@@ -1,0 +1,42 @@
+ <!-- Si un ticket a eu une critique ne pas mettre le bouton "créer une critique-->
+{% load blog_extras %}
+
+ <div class="card w-100 mb-3">
+  <div class="card-header">
+    <div class="row justify-content-between">
+      <div class="col-4">
+        <p>{% show_creator ticket.user.username %} a demandé une critique</p>
+      </div>
+      <div class="col-4">
+        <p>{{ ticket.time_created }}</p>
+      </div>
+    </div>
+  </div>
+  <div class="card-body">
+    <div class="container">
+      <div class="row">
+        <div class="col">
+          <h5 class="card-title text-left">{{ ticket.title }}</h5>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <p class="card-text">{{ ticket.description }}</p>
+        </div>
+      </div>
+      {% if ticket.image %}
+        <div class="row">
+          <div class="col">
+            <img style="width:100px; height:200px;" src="http://127.0.0.1:8000/media/{{ ticket.image }}">
+          </div>
+        </div>
+      {% endif %}
+      <!-- Ce bouton doit apparaître quand il n'y a pas encore de critique et disparaître dans le cas contraire-->
+      {% if page == "home" %}
+        {% include 'blog/partials/button_create_review.html' with ticket=ticket %}
+      {% elif page == "posts" %}
+        {% include 'blog/partials/buttons_edit_delete.html'%}
+      {% endif %}
+    </div>
+  </div>
+</div>

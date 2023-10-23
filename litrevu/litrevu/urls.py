@@ -69,6 +69,16 @@ urlpatterns = [
         blog.views.followers_list,
         name='followers-list'
     ),
+    path(
+        'followers/delete/<int:id>',
+        blog.views.unfollow,
+        name='unfollow'
+    ),
+    path(
+        'posts/',
+        blog.views.current_user_posts,
+        name='posts'
+    )
 ]
 
 if settings.DEBUG:

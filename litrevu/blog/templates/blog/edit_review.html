@@ -2,5 +2,5 @@
 
 {% block content %}
 <h1 class="text-center">Modifier une critique</h1>
-{% include 'blog/partials/ticket_and_review.html with ticket=ticket review_form=review_form %}
+    {% include 'blog/partials/ticket_and_review.html' with ticket=ticket review_form=review_form %}
 {% endblock %}

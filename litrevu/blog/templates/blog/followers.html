@@ -2,25 +2,51 @@
 
 {% block content %}
 
-<h1 class="text-center">Suivre un utilisateur</h1>
+<h1 class="text-center mt-3">Abonnements</h1>
+<h4 class="text-center mt-5">Suivre d'autres utilisateurs</h4>
+{% if message %}
+    <p>{{ message }}</p>
+{% endif %}
 <form method="post">
     {% csrf_token %}
     {{ form.as_p }}
     <input type="submit" value="Envoyer">
 </form>
 
-<h1>Abonnements</h1>
-<ul class="list-group">
-{% for user in abonnements %}
-    <li class="list-group-item">{{ user.followed_user }}</li>
-{% endfor %}
-</ul>
+<div class="card mb-5 mt-3 ">
+  <h5 class="card-header">Abonnements</h5>
+  <div class="card-body">
+      <ul class="list-group">
+          {% for user in abonnements %}
+              <li class="list-group-item">
+                  <div class="row">
+                        <div class="col-10">
+                            <p class="pt-2">{{ user.followed_user }}</p>
+                        </div>
+                        <div class="col-2 text-end">
+                            <button class="btn btn-primary" type="button"><a class="text-decoration-none text-white" href="{% url 'unfollow' user.followed_user.id  %}">Se désabonner</a></button>
+                        </div>
+                    </div>
+              </li>
+          {% endfor %}
+      </ul>
+  </div>
+</div>
 
-<h1>Abonnées</h1>
-<ul class="list-group">
-{% for user in abonnes %}
-    <li class="list-group-item">{{ user.user }}</li>
-{% endfor %}
-</ul>
+<div class="card mb-5">
+  <h5 class="card-header">Abonnés</h5>
+  <div class="card-body">
+      <ul class="list-group">
+            {% for user in abonnes %}
+                <li class="list-group-item">
+                    <div class="row">
+                           <p class="pt-2">{{ user.user }}</p>
+                    </div>
+                </li>
+            {% endfor %}
+      </ul>
+  </div>
+</div>
+
 
 {% endblock %}

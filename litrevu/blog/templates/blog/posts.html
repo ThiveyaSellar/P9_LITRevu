@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% load blog_extras %}
+
+{% block content %}
+
+<div class="container text-center">
+    {% for instance in tickets_and_reviews %}
+        {% if instance|model_type == 'Ticket' %}
+            {% include 'blog/partials/feed_ticket.html' with ticket=instance %}
+        {% elif instance|model_type == 'Review' %}
+            {% include 'blog/partials/feed_review.html' with review=instance %}
+        {% endif %}
+
+    {% endfor %}
+</div>
+{% endblock content %}

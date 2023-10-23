@@ -1,0 +1,59 @@
+ <!-- Si un ticket a eu une critique ne pas mettre le bouton "créer une critique-->
+{% load blog_extras %}
+ <div class="card w-100 mb-3">
+  <div class="card-header">
+    <div class="row justify-content-between">
+      <div class="col-4">
+        <p>{% show_creator review.user.username %} a publié une critique</p>
+      </div>
+      <div class="col-4">
+        <p>{{ review.time_created }}</p>
+      </div>
+    </div>
+  </div>
+  <div class="card-body">
+    <div class="container">
+      <div class="row">
+        <div class="col">
+          <h5 class="card-title text-left">{{ review.headline }} - {% show_stars review.rating %}</h5>
+        </div>
+      </div>
+      <div class="row mb-3">
+        <div class="col">
+          <p class="card-text">{{ review.body }}</p>
+        </div>
+      </div>
+    </div>
+    <div class="card w-100 mb-3">
+    <div class="card-body">
+    <div class="container">
+      <div class="row">
+        <div class="col">
+          <p class="card-title text-left">Ticket - {{ review.ticket.user.username }}</p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <h5 class="card-title">{{ review.ticket.title }}</h5>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <p class="card-text">{{ review.ticket.description }}</p>
+        </div>
+      </div>
+      {% if review.ticket.image %}
+        <div class="row">
+          <div class="col">
+            <img style="width:100px; height:200px;" src="http://127.0.0.1:8000/media/{{ review.ticket.image }}">
+          </div>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+  </div>
+    {% if page == "posts" %}
+        {% include 'blog/partials/buttons_edit_delete.html'%}
+      {% endif %}
+  </div>
+</div>

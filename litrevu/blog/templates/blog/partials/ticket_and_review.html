@@ -1,9 +1,10 @@
+{% load blog_extras %}
 <div class="card">
   <div class="card-header">
     Vous êtes en train de poster en réponse à
   </div>
   <div class="card-body">
-    <p class="card-text">{{ ticket.user.username }} a demandé une critique :</p>
+    <p class="card-text">{% show_creator ticket.user.username %} a demandé une critique :</p>
     <h5 class="card-title">{{ ticket.title }}</h5>
     <p class="card-text">{{ ticket.description }}</p>
     <p class="card-text">{{ ticket.image }}</p>

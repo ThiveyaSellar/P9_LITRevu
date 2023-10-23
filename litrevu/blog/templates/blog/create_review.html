@@ -3,7 +3,7 @@
 {% block content %}
 
 <h1 class="text-center">Créer une critique</h1>
-<form method="post">
+<form method="post" enctype="multipart/form-data">
     {% csrf_token %}
     {{ ticket_form.as_p }}
     {{ review_form.as_p }}
