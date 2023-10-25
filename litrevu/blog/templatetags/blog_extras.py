@@ -13,9 +13,9 @@ def is_null(instance):
 @register.simple_tag(takes_context=True)
 def show_creator(context, user):
     if user == context['user'].username:
-        return "Vous"
+        return "Vous avez"
     else:
-        return user
+        return f"{user} a"
 
 @register.simple_tag()
 def show_stars(rating):

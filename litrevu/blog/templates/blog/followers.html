@@ -2,16 +2,22 @@
 
 {% block content %}
 
-<h1 class="text-center mt-3">Abonnements</h1>
-<h4 class="text-center mt-5">Suivre d'autres utilisateurs</h4>
-{% if message %}
-    <p>{{ message }}</p>
-{% endif %}
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <input type="submit" value="Envoyer">
-</form>
+<h1 class="text-center mb-5 mt-3">Abonnements</h1>
+
+<div class="card mb-5 mt-3 ">
+    <h5 class="card-header">Suivre d'autres utilisateurs</h5>
+    <div class="card-body">
+        {% if message %}
+            <p>{{ message }}</p>
+        {% endif %}
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <input type="submit" value="Suivre">
+        </form>
+    </div>
+</div>
+
 
 <div class="card mb-5 mt-3 ">
   <h5 class="card-header">Abonnements</h5>

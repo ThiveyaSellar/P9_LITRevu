@@ -1,6 +1,6 @@
 from itertools import chain
 
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.db.models import CharField, Value
 
@@ -172,7 +172,7 @@ def delete_ticket(request, id):
     ticket = Ticket.objects.get(id=id)
     if request.method == 'POST' and request.user == ticket.user:
         ticket.delete()
-        return redirect('home')
+        return redirect('posts')
     return render(request, 'blog/delete_ticket.html', context={'ticket':ticket})
 
 @login_required
@@ -180,8 +180,18 @@ def delete_review(request, id):
     review = Review.objects.get(id=id)
     if request.method == 'POST' and request.user == review.user:
         review.delete()
-        return redirect('home')
+        return redirect('posts')
     return render(request, 'blog/delete_review.html', context={'review':review})
+
+
+'''@login_required
+def delete_review(request, id):
+    review = Review.objects.get(id=id)
+    if str(request.user) == str(review.user):
+        print("1")
+        review.delete()
+    return redirect('posts')
+    return render(request, 'blog/delete_review.html', context={'review':review})'''
 
 
 @login_required
@@ -189,7 +199,6 @@ def followers_list(request):
     # Les utilisateurs que je suis sont mes abonnements
     # Je suis user, ils sont followed_user
     abonnements = UserFollows.objects.filter(user=request.user.id)
-
     # Les utilisateurs qui me suivent sont les abonnes
     # Je suis suivi je suis followed_user et ils sont user
     abonnes = UserFollows.objects.filter(followed_user=request.user.id)
@@ -201,26 +210,37 @@ def followers_list(request):
         form = FollowerForm(request.POST)
         if form.is_valid():
             name = form.cleaned_data["name"]
-            print("---------------------")
-            print(type(name))
-            print(type(request.user))
             if name == str(request.user):
                 message = "Vous ne pouvez pas vous suivre vous même."
             else:
                 message = "A voir."
-                '''# Vérifier si l'abonnement existe déjà
-                exists = False
+                already_following = False
                 for user in abonnements:
-                    if follow.followed_user == user.followed_user:
-                        exists = True
+                    if name ==str(user.followed_user):
+                        already_following = True
+                        message = f"Vous suivez déjà {name}."
                         break
-                if exists:
-                    message = f"Vous êtes déjà abonné à {follow.followed_user}."
-                else:
-                    follow.user = request.user
-                    follow.save()
-                    # Rester sur la même page
-                    return redirect('followers-list')'''
+                if not already_following:
+                    print(f"{name} n'est pas suivi")
+                # Récupérer l'instance utilisateur avec ce nom
+                # following = User.objects.get(username=name)
+                # following = get_object_or_404(User, username=name)
+                try:
+                    following = User.objects.get(username=name)
+                    print(following)
+                    exists = True
+                    if exists and not already_following:
+                        relation = UserFollows.objects.create(
+                            user=request.user,
+                            followed_user=following
+                        )
+                        relation.save()
+                        # Rester sur la même page
+                        return redirect('followers-list')
+                except User.DoesNotExist:
+                    message = f"{name} n'existe pas."
+
+
 
     context = {
         'abonnements': abonnements,

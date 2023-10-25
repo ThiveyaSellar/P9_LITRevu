@@ -21,7 +21,7 @@ class ReviewForm(forms.ModelForm):
 
 class FollowerForm(forms.Form):
 
-    name = forms.CharField(max_length=100)
+    name = forms.CharField(max_length=100, label="Nom d'utilisateur")
     '''class Meta:
         model = UserFollows
         fields = ['followed_user']
