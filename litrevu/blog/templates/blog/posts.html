@@ -3,8 +3,10 @@
 
 {% block content %}
 
+<h1 class="text-center mb-5">Vos posts</h1>
+
 <div class="container text-center">
-    {% for instance in tickets_and_reviews %}
+    {% for instance in page_obj %}
         {% if instance|model_type == 'Ticket' %}
             {% include 'blog/partials/feed_ticket.html' with ticket=instance %}
         {% elif instance|model_type == 'Review' %}
@@ -12,5 +14,23 @@
         {% endif %}
 
     {% endfor %}
+
+    <span>
+        {% if page_obj.has_previous %}
+            <a href="?page=1">« première</a>
+            <a href="?page={{ page_obj.previous_page_number }}">Précédente</a>
+        {% endif %}
+
+        <span>
+            Page {{ page_obj.number }} sur {{ page_obj.paginator.num_pages }}.
+
+        </span>
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">Suivante</a>
+
+            <a href="?page={{ page_obj.paginator.num_pages }}">Dernière »</a>
+        {% endif %}
+    </span>
 </div>
+
 {% endblock content %}

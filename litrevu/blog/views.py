@@ -10,25 +10,7 @@ from blog.models import Ticket, Review, UserFollows
 from authentication.models import User
 
 def get_feed_tickets(users):
-    # Si le ticket et la critique ont le même utilisateur
-    # Ne pas afficher le ticket
-    tickets = Ticket.objects.filter(user__in=users, review__isnull=True)
-    # Chercher tous les tickets
-    # Chercher tous les tickets qui ont le même utilisateur
-    # et qui ont une review avec cette utilisateur
-    # Ce que je veux - ce que je ne veux pas
-
-    # Ce que je ne veux pas
-    # Tous les tickets qui ont une review
-    # Tous les reviews avec un ticket
-    #tickets_with_reviews_ids = Review.objects.values('ticket__id')
-
-    # Récupérer les tickets de ces reviews
-    #tickets_with_review = Ticket.objects.filter(
-     #   id__in=tickets_with_reviews_ids
-    #)
-    # le créateur du ticket et de la review sont les mêmes
-
+    tickets = Ticket.objects.filter(user__in=users)
     return tickets
 
 def get_feed_reviews(users):
@@ -48,7 +30,12 @@ def home(request):
 
     users = User.objects.filter(username__in=user_names)
 
+    # Récupérer toutes les demandes de critiques avec ces utilisateurs
     tickets = get_feed_tickets(users)
+    print("------------")
+    for t in tickets :
+        if not t.review.all():
+            print(t.review.all())
     reviews = get_feed_reviews(users)
 
     tickets_and_reviews = sorted(
@@ -63,7 +50,9 @@ def home(request):
     page_obj = paginator.get_page(page)
 
     context = {
-        'tickets_and_reviews': tickets_and_reviews,
+        #'tickets_and_reviews': tickets_and_reviews,
+        # devient pour la pagination
+        'page_obj': page_obj,
         'page': "home"
     }
     return render(request, 'blog/home.html', context=context)
@@ -78,8 +67,16 @@ def current_user_posts(request):
         key=lambda instance: instance.time_created,
         reverse=True
     )
+
+    paginator = Paginator(tickets_and_reviews, 5)
+    page = request.GET.get('page')
+
+    page_obj = paginator.get_page(page)
+
     context = {
-        'tickets_and_reviews': tickets_and_reviews,
+        #'tickets_and_reviews': tickets_and_reviews,
+        # devient pour la pagination
+        'page_obj': page_obj,
         'page': "posts"
     }
 

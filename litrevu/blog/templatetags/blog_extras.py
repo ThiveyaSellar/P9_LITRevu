@@ -17,6 +17,10 @@ def show_creator(context, user):
     else:
         return f"{user} a"
 
+@register.filter
+def show_create_review_button(ticket):
+    return not ticket.review.all()
+
 @register.simple_tag()
 def show_stars(rating):
     if rating == 1:
