@@ -1,5 +1,6 @@
 from itertools import chain
 
+from django.core.paginator import Paginator
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.db.models import CharField, Value
@@ -55,6 +56,12 @@ def home(request):
         key=lambda instance: instance.time_created,
         reverse=True
     )
+
+    paginator = Paginator(tickets_and_reviews, 5)
+    page = request.GET.get('page')
+
+    page_obj = paginator.get_page(page)
+
     context = {
         'tickets_and_reviews': tickets_and_reviews,
         'page': "home"
@@ -81,10 +88,12 @@ def current_user_posts(request):
 @login_required
 def create_ticket(request):
     if request.method == "POST":
-        form = TicketForm(request.POST)
+        form = TicketForm(request.POST, request.FILES)
         if form.is_valid():
             # Ajouter l'utilisateur au ticket
             ticket = form.save(commit=False)
+            print(ticket.title)
+            print(ticket.image)
             ticket.user = request.user
             ticket.save()
             return redirect('home')
@@ -94,8 +103,6 @@ def create_ticket(request):
 
 @login_required
 def create_review(request):
-    ticket_form = TicketForm()
-    review_form = ReviewForm()
     if request.method == "POST":
         if 'ticket_blog' in request.POST:
             ticket_form = TicketForm(request.POST, request.FILES)
@@ -112,6 +119,9 @@ def create_review(request):
                         review.user = request.user
                         review.save()
                         return redirect('home')
+    else:
+        ticket_form = TicketForm()
+        review_form = ReviewForm()
     context = {
         'ticket_form': ticket_form,
         'review_form': review_form
@@ -152,7 +162,7 @@ def edit_review(request, id):
             return redirect('home')
     else:
         review_form = ReviewForm(instance=review)
-    return render(request,'blog/edit_review.html', context={'review_form':review_form})
+    return render(request,'blog/edit_review.html', context={'ticket': review.ticket, 'review_form':review_form})
 
 @login_required
 def edit_ticket(request, id):

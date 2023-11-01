@@ -1,5 +1,13 @@
 <form method="post" enctype="multipart/form-data">
     {% csrf_token %}
-    {{ ticket_form.as_p }}
+    <div class="border border-dark border-1 mx-5 p-3">
+        <h3>Livre/Article</h3>
+        <b>{{ ticket_form.title.label }} :</b><br>
+        {{ ticket_form.title }}<br><br>
+        <b>{{ ticket_form.description.label }}</b><br>
+        {{ ticket_form.description }}<br><br>
+        <b>{{ ticket_form.image.label }}</b><br>
+        {{ ticket_form.image }}<br><br>
+        {{  ticket_form.ticket_blog }}
     <input type="submit" value="Envoyer">
 </form>

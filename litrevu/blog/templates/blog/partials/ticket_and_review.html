@@ -7,12 +7,18 @@
     <p class="card-text">{% show_creator ticket.user.username %} demandé une critique :</p>
     <h5 class="card-title">{{ ticket.title }}</h5>
     <p class="card-text">{{ ticket.description }}</p>
-    <p class="card-text">{{ ticket.image }}</p>
+    <img style="width:100px; height:200px;" src="http://127.0.0.1:8000/media/{{ ticket.image }}">
 
 
     <form method="post">
       {% csrf_token %}
-      {{ review_form.as_p }}
+      {{ review_form.headline.label }}<br>
+      {{ review_form.headline }}<br>
+      {{ review_form.rating.label }}<br>
+      {{ review_form.rating }}<br>
+      {{ review_form.body.label }}<br>
+      {{ review_form.body }} <br>
+      {{ review_form.review_blog }}
       <input type="submit" value="Envoyer">
     </form>
   </div>
