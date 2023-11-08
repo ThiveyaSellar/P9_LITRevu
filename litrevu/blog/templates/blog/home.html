@@ -14,13 +14,22 @@
             <a class="btn btn-primary" href="{% url 'create-review' %}" role="button">Créer une critique</a>
         </div>
     </div>
-    {% for instance in page_obj %}
-        {% if instance|model_type == 'Ticket' %}
-            {% include 'blog/partials/feed_ticket.html' with ticket=instance  %}
-        {% elif instance|model_type == 'Review' %}
-            {% include 'blog/partials/feed_review.html' with review=instance %}
-        {% endif %}
-    {% endfor %}
+    {% if page_obj %}
+        {% for instance in page_obj %}
+            {% if instance|model_type == 'Ticket' %}
+                {% include 'blog/partials/feed_ticket.html' with ticket=instance  %}
+            {% elif instance|model_type == 'Review' %}
+                {% include 'blog/partials/feed_review.html' with review=instance %}
+            {% endif %}
+        {% endfor %}
+    {% else %}
+        <p class="text-center mb-5 mt-5"> Aucune critique ou demande de critique pour l'instant. <br>
+             Vous pouvez : <br>
+                - Demander ou créer une critique. <br>
+                - Suivre des utilisateurs pour voir leurs critiques et demandes de critiques.
+        </p>
+    {%endif%}
+
 
     <span>
         {% if page_obj.has_previous %}
@@ -28,16 +37,18 @@
             <a href="?page={{ page_obj.previous_page_number }}">Précédente</a>
         {% endif %}
 
-        <span>
-            Page {{ page_obj.number }} sur {{ page_obj.paginator.num_pages }}.
+    <span>
+        Page {{ page_obj.number }} sur {{ page_obj.paginator.num_pages }}
+    </span>
 
-        </span>
         {% if page_obj.has_next %}
             <a href="?page={{ page_obj.next_page_number }}">Suivante</a>
 
             <a href="?page={{ page_obj.paginator.num_pages }}">Dernière »</a>
         {% endif %}
     </span>
+
+
 
 </div>
 {% endblock content %}

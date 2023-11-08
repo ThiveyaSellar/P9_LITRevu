@@ -1,5 +1,4 @@
 from django.core.validators import MinValueValidator, MaxValueValidator
-from django.conf import settings
 from django.db import models
 from django.conf import settings
 
@@ -14,6 +13,7 @@ class Ticket(models.Model):
     )
     image = models.ImageField(null=True, blank=True)
     time_created = models.DateTimeField(auto_now_add=True)
+
 
 class Review(models.Model):
     ticket = models.ForeignKey(
@@ -30,6 +30,7 @@ class Review(models.Model):
     user = models.ForeignKey(
         to=settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     time_created = models.DateTimeField(auto_now_add=True)
+
 
 class UserFollows(models.Model):
     # Your UserFollows model definition goes here

@@ -32,9 +32,9 @@
         </div>
       {% endif %}
       <!-- Ce bouton doit apparaître quand il n'y a pas encore de critique et disparaître dans le cas contraire-->
-      -----------
+
       {{ ticket.review.headline }}
-      -----------
+
       {% if page == "home" %}
         {% if  ticket|show_create_review_button %}
           {% include 'blog/partials/button_create_review.html' with ticket=ticket %}

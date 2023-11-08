@@ -9,13 +9,16 @@ from blog.forms import TicketForm, ReviewForm, FollowerForm
 from blog.models import Ticket, Review, UserFollows
 from authentication.models import User
 
+
 def get_feed_tickets(users):
     tickets = Ticket.objects.filter(user__in=users)
     return tickets
 
+
 def get_feed_reviews(users):
     reviews = Review.objects.filter(user__in=users)
     return reviews
+
 
 @login_required
 def home(request):
@@ -32,8 +35,7 @@ def home(request):
 
     # Récupérer toutes les demandes de critiques avec ces utilisateurs
     tickets = get_feed_tickets(users)
-    print("------------")
-    for t in tickets :
+    for t in tickets:
         if not t.review.all():
             print(t.review.all())
     reviews = get_feed_reviews(users)
@@ -50,12 +52,13 @@ def home(request):
     page_obj = paginator.get_page(page)
 
     context = {
-        #'tickets_and_reviews': tickets_and_reviews,
+        # 'tickets_and_reviews': tickets_and_reviews,
         # devient pour la pagination
         'page_obj': page_obj,
         'page': "home"
     }
     return render(request, 'blog/home.html', context=context)
+
 
 @login_required
 def current_user_posts(request):
@@ -74,13 +77,14 @@ def current_user_posts(request):
     page_obj = paginator.get_page(page)
 
     context = {
-        #'tickets_and_reviews': tickets_and_reviews,
+        # 'tickets_and_reviews': tickets_and_reviews,
         # devient pour la pagination
         'page_obj': page_obj,
         'page': "posts"
     }
 
     return render(request, 'blog/posts.html', context=context)
+
 
 @login_required
 def create_ticket(request):
@@ -97,6 +101,7 @@ def create_ticket(request):
     else:
         form = TicketForm()
     return render(request, 'blog/create_ticket.html', context={'form': form})
+
 
 @login_required
 def create_review(request):
@@ -125,6 +130,7 @@ def create_review(request):
     }
     return render(request, 'blog/create_review.html', context=context)
 
+
 @login_required
 def create_review_to_ticket(request, id):
     # Récupérer le ticket avec l'id qui a été passé dans l'url
@@ -146,7 +152,12 @@ def create_review_to_ticket(request, id):
         'ticket': ticket,
         'review_form': review_form
     }
-    return render(request,'blog/create_review_to_ticket.html', context=context)
+    return render(
+        request,
+        'blog/create_review_to_ticket.html',
+        context=context
+    )
+
 
 @login_required
 def edit_review(request, id):
@@ -159,7 +170,12 @@ def edit_review(request, id):
             return redirect('home')
     else:
         review_form = ReviewForm(instance=review)
-    return render(request,'blog/edit_review.html', context={'ticket': review.ticket, 'review_form':review_form})
+    return render(
+        request,
+        'blog/edit_review.html',
+        context={'ticket': review.ticket, 'review_form': review_form}
+    )
+
 
 @login_required
 def edit_ticket(request, id):
@@ -172,7 +188,12 @@ def edit_ticket(request, id):
             return redirect('home')
     else:
         ticket_form = TicketForm(instance=ticket)
-    return render(request, 'blog/edit_ticket.html', context={'ticket_form':ticket_form})
+    return render(
+        request,
+        'blog/edit_ticket.html',
+        context={'ticket_form': ticket_form}
+    )
+
 
 @login_required
 def delete_ticket(request, id):
@@ -180,7 +201,12 @@ def delete_ticket(request, id):
     if request.method == 'POST' and request.user == ticket.user:
         ticket.delete()
         return redirect('posts')
-    return render(request, 'blog/delete_ticket.html', context={'ticket':ticket})
+    return render(
+        request,
+        'blog/delete_ticket.html',
+        context={'ticket': ticket}
+    )
+
 
 @login_required
 def delete_review(request, id):
@@ -188,7 +214,11 @@ def delete_review(request, id):
     if request.method == 'POST' and request.user == review.user:
         review.delete()
         return redirect('posts')
-    return render(request, 'blog/delete_review.html', context={'review':review})
+    return render(
+        request,
+        'blog/delete_review.html',
+        context={'review': review}
+    )
 
 
 '''@login_required
@@ -198,7 +228,11 @@ def delete_review(request, id):
         print("1")
         review.delete()
     return redirect('posts')
-    return render(request, 'blog/delete_review.html', context={'review':review})'''
+    return render(
+    request,
+    'blog/delete_review.html',
+    context={'review':review}
+    )'''
 
 
 @login_required
@@ -223,7 +257,7 @@ def followers_list(request):
                 message = "A voir."
                 already_following = False
                 for user in abonnements:
-                    if name ==str(user.followed_user):
+                    if name == str(user.followed_user):
                         already_following = True
                         message = f"Vous suivez déjà {name}."
                         break
@@ -247,8 +281,6 @@ def followers_list(request):
                 except User.DoesNotExist:
                     message = f"{name} n'existe pas."
 
-
-
     context = {
         'abonnements': abonnements,
         'abonnes': abonnes,
@@ -258,6 +290,7 @@ def followers_list(request):
 
     return render(request, 'blog/followers.html', context=context)
 
+
 @login_required
 def unfollow(request, id):
     # Dans la table UserFollows supprimer la ligne où :
@@ -266,4 +299,3 @@ def unfollow(request, id):
     print(id)
     relation.delete()
     return redirect('followers-list')
-

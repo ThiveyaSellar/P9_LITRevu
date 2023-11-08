@@ -3,9 +3,11 @@ from django.contrib.auth import login, authenticate, logout
 
 from . import forms
 
+
 def logout_user(request):
     logout(request)
     return redirect('login')
+
 
 def login_page(request):
     form = forms.LoginForm()
@@ -16,8 +18,8 @@ def login_page(request):
             # Authentifier l'utilisateur avec authenticate et login
             # authenticate retourne l'utilisateur correspondant sinon None
             user = authenticate(
-                username = form.cleaned_data['username'],
-                password = form.cleaned_data['password']
+                username=form.cleaned_data['username'],
+                password=form.cleaned_data['password']
             )
             if user is not None:
                 login(request, user)
@@ -28,6 +30,7 @@ def login_page(request):
         'message': message,
     }
     return render(request, "authentication/login.html", context=context)
+
 
 def signup_page(request):
     form = forms.SignupForm()

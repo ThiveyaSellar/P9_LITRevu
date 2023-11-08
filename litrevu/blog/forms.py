@@ -4,6 +4,7 @@ from blog.models import Ticket, Review, UserFollows
 
 User = get_user_model()
 
+
 class TicketForm(forms.ModelForm):
     ticket_blog = forms.BooleanField(widget=forms.HiddenInput, initial=True)
 
@@ -53,10 +54,11 @@ class ReviewForm(forms.ModelForm):
             ),
         }'''
 
+
 class FollowerForm(forms.Form):
 
     name = forms.CharField(max_length=100, label="Nom d'utilisateur")
     '''class Meta:
         model = UserFollows
         fields = ['followed_user']
-'''
+    '''
