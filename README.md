@@ -33,7 +33,7 @@ env\Scripts\activate.bat
 ```
 pip install -r requirements.txt
 ```
-- Lancer le serveur local :
+- Se placer dans le répertoire litrevu et lancer le serveur local :
 ```
 python manage.py runserver
 ```
