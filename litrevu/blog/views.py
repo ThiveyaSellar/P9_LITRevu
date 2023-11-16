@@ -11,12 +11,13 @@ from blog.models import Ticket, Review, UserFollows
 from authentication.models import User
 
 
-def get_feed_tickets(users):
-    # condition_1 = Q()
-    # condition_2 = Q()
-    tickets = Ticket.objects.filter(user__in=users)
+def get_feed_tickets(users, logged_user):
+    condition_1 = Q(user__in=users)
+    # Exclure les tickets où il est créateur du ticket et de la review
+    condition_2 = Q(user=logged_user)
+    condition_3 = Q(review__user=logged_user)
+    tickets = Ticket.objects.filter(condition_1 & ~(condition_2 & condition_3))
     return tickets
-
 
 def get_feed_reviews(users, logged_user):
     # Récupérer les critiques des personnes que je suis
@@ -25,7 +26,6 @@ def get_feed_reviews(users, logged_user):
     condition_2 = Q(ticket__user=logged_user)
     reviews = Review.objects.filter(condition_1 | condition_2)
     return reviews
-
 
 @login_required
 def home(request):
@@ -41,10 +41,7 @@ def home(request):
     users = User.objects.filter(username__in=user_names)
 
     # Récupérer toutes les demandes de critiques avec ces utilisateurs
-    tickets = get_feed_tickets(users)
-    for t in tickets:
-        if not t.review.all():
-            print(t.review.all())
+    tickets = get_feed_tickets(users, request.user)
     reviews = get_feed_reviews(users, request.user)
 
     tickets_and_reviews = sorted(
