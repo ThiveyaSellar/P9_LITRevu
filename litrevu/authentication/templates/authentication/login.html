@@ -5,16 +5,16 @@
 <div class="container text-center">
     <div class="row align-items-center">
         <div class="col">
-            <h1 class="text-center">Inscrivez-vous</h1>
+            <h1 class="text-center mb-5 mt-5">Inscrivez-vous</h1>
             <a class="btn btn-primary" href="{% url 'signup' %}" role="button">S'inscrire</a>
         </div>
         <div class="col">
-            <h1 class="text-center">Connectez-vous</h1>
+            <h1 class="text-center mb-5 mt-5">Connectez-vous</h1>
             <p class="text-center">{{ message }}</p>
             <form method="post">
                 {{ form.as_p }}
                 {% csrf_token %}
-                <button type="submit" class="btn btn-primary">Se connecter</button>
+                <button type="submit" class="btn btn-primary mt-3">Se connecter</button>
             </form>
         </div>
     </div>

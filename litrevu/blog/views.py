@@ -1,9 +1,10 @@
 from itertools import chain
 
 from django.core.paginator import Paginator
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
-from django.db.models import CharField, Value
+from django.db.models import Q
+
 
 from blog.forms import TicketForm, ReviewForm, FollowerForm
 from blog.models import Ticket, Review, UserFollows
@@ -11,12 +12,18 @@ from authentication.models import User
 
 
 def get_feed_tickets(users):
+    # condition_1 = Q()
+    # condition_2 = Q()
     tickets = Ticket.objects.filter(user__in=users)
     return tickets
 
 
-def get_feed_reviews(users):
-    reviews = Review.objects.filter(user__in=users)
+def get_feed_reviews(users, logged_user):
+    # Récupérer les critiques des personnes que je suis
+    condition_1 = Q(user__in=users)
+    # Récupérer les critiques qui portent sur mes tickets
+    condition_2 = Q(ticket__user=logged_user)
+    reviews = Review.objects.filter(condition_1 | condition_2)
     return reviews
 
 
@@ -38,7 +45,7 @@ def home(request):
     for t in tickets:
         if not t.review.all():
             print(t.review.all())
-    reviews = get_feed_reviews(users)
+    reviews = get_feed_reviews(users, request.user)
 
     tickets_and_reviews = sorted(
         chain(tickets, reviews),
@@ -55,7 +62,8 @@ def home(request):
         # 'tickets_and_reviews': tickets_and_reviews,
         # devient pour la pagination
         'page_obj': page_obj,
-        'page': "home"
+        'page': "home",
+        'logged_user': request.user.username
     }
     return render(request, 'blog/home.html', context=context)
 

@@ -35,3 +35,9 @@ $ python manage.py runserver
 ### Documentation Django
 
 https://docs.djangoproject.com/en/4.2/
+
+## Générer le rapport de flake 8
+
+```
+flake8
+```
