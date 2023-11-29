@@ -19,6 +19,7 @@ def get_feed_tickets(users, logged_user):
     tickets = Ticket.objects.filter(condition_1 & ~(condition_2 & condition_3))
     return tickets
 
+
 def get_feed_reviews(users, logged_user):
     # Récupérer les critiques des personnes que je suis
     condition_1 = Q(user__in=users)
@@ -26,6 +27,7 @@ def get_feed_reviews(users, logged_user):
     condition_2 = Q(ticket__user=logged_user)
     reviews = Review.objects.filter(condition_1 | condition_2)
     return reviews
+
 
 @login_required
 def home(request):

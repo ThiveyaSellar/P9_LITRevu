@@ -6,24 +6,24 @@
 <form method="post" enctype="multipart/form-data">
     {% csrf_token %}
     <div class="border border-dark border-1 border-bottom-0 mx-5 p-3">
-        <h3>Livre/Article</h3>
-        {{ ticket_form.title.label }}<br>
-        {{ ticket_form.title }}<br>
-        {{ ticket_form.description.label }}<br>
-        {{ ticket_form.description }}<br>
-        {{ ticket_form.image.label }}<br>
-        {{ ticket_form.image }}
+        <h2>Livre/Article</h2>
+        <label>{{ ticket_form.title.label }}<br>
+            {{ ticket_form.title }}</label><br>
+        <label>{{ ticket_form.description.label }}<br>
+        {{ ticket_form.description }}</label><br>
+        <label>{{ ticket_form.image.label }}<br>
+        {{ ticket_form.image }}</label>
         {{  ticket_form.ticket_blog }}
 
     </div>
     <div class="border border-dark border-1 mx-5 p-3" >
-        <h3>Critique</h3>
-        {{ review_form.headline.label }}<br>
-        {{ review_form.headline }}<br>
-        {{ review_form.rating.label }}<br>
-        {{ review_form.rating }}<br>
-        {{ review_form.body.label }}<br>
-        {{ review_form.body }} <br>
+        <h2>Critique</h2>
+        <label>{{ review_form.headline.label }}<br>
+        {{ review_form.headline }}</label><br>
+        <label>{{ review_form.rating.label }}<br>
+        {{ review_form.rating }}</label><br>
+        <label>{{ review_form.body.label }}<br>
+        {{ review_form.body }}</label> <br>
         {{ review_form.review_blog }}
         <input class="mt-3" type="submit" value="Envoyer">
     </div>

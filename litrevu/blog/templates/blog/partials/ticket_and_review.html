@@ -5,7 +5,7 @@
   </div>
   <div class="card-body">
     <p class="card-text">{% show_creator ticket.user.username %} demandé une critique :</p>
-    <h5 class="card-title">{{ ticket.title }}</h5>
+    <h2 class="card-title">{{ ticket.title }}</h2>
     <p class="card-text">{{ ticket.description }}</p>
     {% if ticket.image %}
       <img style="width:100px; height:200px;" src="http://127.0.0.1:8000/media/{{ ticket.image }}">
