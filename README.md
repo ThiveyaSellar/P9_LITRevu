@@ -14,7 +14,7 @@ Pour réaliser ce projet, on utilise Django qui est un framework Python.
 git clone https://github.com/ThiveyaSellar/P9_LITRevu.git
 ```
 
-- Créer un environnement virtuel :
+- Créer un environnement virtuel dans le projet :
 ```
 python -m venv env
 ```
