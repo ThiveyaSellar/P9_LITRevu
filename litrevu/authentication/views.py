@@ -18,7 +18,7 @@ def login_page(request):
             # Authentifier l'utilisateur avec authenticate et login
             # authenticate retourne l'utilisateur correspondant sinon None
             user = authenticate(
-                username=form.cleaned_data['username'],
+                username=form.cleaned_data['username'].lower(),
                 password=form.cleaned_data['password']
             )
             if user is not None:
@@ -37,7 +37,9 @@ def signup_page(request):
     if request.method == "POST":
         form = forms.SignupForm(request.POST)
         if form.is_valid():
-            user = form.save()
+            user = form.save(commit=False)
+            user.username = form.cleaned_data['username'].lower()
+            user.save()
             login(request, user)
             return redirect('home')
     context = {

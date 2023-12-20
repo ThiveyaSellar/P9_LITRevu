@@ -62,7 +62,7 @@ def home(request):
         # devient pour la pagination
         'page_obj': page_obj,
         'page': "home",
-        'logged_user': request.user.username
+        'logged_user': request.user.username.capitalize()
     }
     return render(request, 'blog/home.html', context=context)
 
@@ -258,13 +258,13 @@ def followers_list(request):
         form = FollowerForm(request.POST)
         if form.is_valid():
             name = form.cleaned_data["name"]
-            if name == str(request.user):
+            if name.lower() == str(request.user).lower():
                 message = "Vous ne pouvez pas vous suivre vous même."
             else:
                 message = "A voir."
                 already_following = False
                 for user in abonnements:
-                    if name == str(user.followed_user):
+                    if name.lower() == str(user.followed_user).lower():
                         already_following = True
                         message = f"Vous suivez déjà {name}."
                         break
