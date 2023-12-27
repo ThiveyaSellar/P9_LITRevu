@@ -1,25 +1,25 @@
 # P9_LITRevu
 
-## Description du projet
+## About this project
 
-La start-up LITRevu souhaite qu'une application web soit conçue pour permettre à ses utilisateurs de publier des critiques de livres ou d’articles et de consulter ou de demander une critique de livres.
-Pour réaliser ce projet, on utilise Django qui est un framework Python.
+The start-up LITRevu wants a web application designed to enable its users to publish reviews of books or articles, and to consult or request book reviews.
+To realize this project, we're using Django, a Python framework.
 
 ## Installation
 
 
-- Cloner le dépôt distant :
+- Clone remote repository :
 
 ```
 git clone https://github.com/ThiveyaSellar/P9_LITRevu.git
 ```
 
-- Créer un environnement virtuel dans le projet :
+- Create a virtual environment in the project :
 ```
 python -m venv env
 ```
 
-- Activer l'environnement virtuel :
+- Activate virtual environment :
 - Linux :
 ```
 source env/bin/activate
@@ -29,36 +29,36 @@ source env/bin/activate
 env\Scripts\activate.bat
 ```
 
-- Installer les paquets nécessaires à partir du fichier requirements.txt :
+- Install the necessary packages from requirements.txt :
 ```
 pip install -r requirements.txt
 ```
-- Se placer dans le répertoire litrevu et lancer le serveur local :
+- Go to the litrevu directory and launch the local server :
 ```
 python manage.py runserver
 ```
-- Ouvrir l'application web dans un navigateur :
+- Open the web application in a browser :
 http://127.0.0.1:8000/
 
 ## Administration
 
-Pour accéder à l'interface d'administration de Django il faut être un super utilisateur.
+To access Django's administration interface, you need to be a superuser.
 
-- Créer un superuser :
+- Create a superuser :
 ```
 python manage.py createsuperuser
 ```
-- Lancer le serveur local :
+- Start the local server :
 ```
 python manage.py runserver
 ```
-- Aller sur http://127.0.0.1:8000/admin et s'authentifier si vous êtes un super utilisateur.
+- Go to http://127.0.0.1:8000/admin and log in if you are a superuser.
 
 # Flake8
 
-Flake8 est un paquet qui permet de vérifier que le code respecte les directives PEP8.
-- Fichier de configuration : tox.ini
-- Générer le rapport de flake 8 :
+Flake8 is a package for checking that code complies with PEP8 guidelines.
+- Configuration file : tox.ini
+- Generate flake 8 report :
 ```
 flake8
 ```
